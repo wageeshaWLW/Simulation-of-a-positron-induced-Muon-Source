@@ -1,8 +1,8 @@
-# High Brilliance Muon Beam Production and Tracking Simulation
+# Muon Beam Production and Tracking Simulation
 
 ## Introduction
 
-This project aims to simulate the production and tracking of a high brilliance muon beam. The method involves shooting high-energy positrons at a target to produce muons, with a focus on minimizing beam divergence.
+This project aims to simulate the production and tracking of a muon beam. The method involves shooting high-energy positrons at a target to produce muons, with a focus on minimizing beam divergence.
 
 ## Experimental Setup
 
@@ -44,44 +44,3 @@ This project aims to simulate the production and tracking of a high brilliance m
 ### Resolution Calculation
 
 - Compute momentum and angular divergence resolutions.
-
-## Example Code
-
-```python
-import numpy as np
-import matplotlib.pyplot as plt
-
-# Define constants
-detector_resolutions = [50e-6, 100e-6, 200e-6]  # in meters
-magnetic_field = 1  # Tesla
-detector_positions = [0, 1, 2, 3, 4, 5]  # in meters
-
-# Function to generate synthetic data
-def generate_event():
-    # Generate random hits
-    hits = [np.random.normal(0, res) for res in detector_resolutions]
-    # Add noise
-    hits = [hit + np.random.poisson(1) for hit in hits]
-    return hits
-
-# Function to track particles
-def track_particles(hits):
-    # Implement Kalman filter tracking
-    pass
-
-# Main simulation loop
-events = []
-for _ in range(1000):
-    event = generate_event()
-    track_particles(event)
-    events.append(event)
-
-# Compute resolutions
-# (Add relevant calculations here)
-
-# Plot results
-plt.hist([event[0] for event in events], bins=50)
-plt.xlabel('Hit Position (m)')
-plt.ylabel('Frequency')
-plt.title('Distribution of Hits at First Detector')
-plt.show()
