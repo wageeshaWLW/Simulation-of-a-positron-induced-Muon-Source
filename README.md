@@ -1,15 +1,87 @@
-Description
+# High Brilliance Muon Beam Production and Tracking Simulation
 
-The production of a high brillance muon beam is one of the most important challenge for the future of Particle Physics. A particularly interesting idea consists of shooting high energy positrons on a target, aiming at the production of muons by means of the process . To mimize the divergence of the resulting "muon beam", the positrons energy is chosen so that the reaction occurs close to threshold (assuming the electrons in the target to be at rest). The main goal of this project is to produce a Monte Carlo simulation of such a process.
+## Introduction
 
-Details
+This project aims to simulate the production and tracking of a high brilliance muon beam. The method involves shooting high-energy positrons at a target to produce muons, with a focus on minimizing beam divergence.
 
-Assume a  meter long,  Tesla dipole magnet is placed after the target. Assume a number of tracking detectors can be placed before the target, after the target before the magnet (one line) and after the magnet (two lines, one for positive the other for negative muons); those could be made of silicon pixels, with a single-hit resolution varying from 50 to 200 .
-Try to address the following items keeping in mind that money matters (i.e. you cannot buy an infinite number of detectors and the smaller the single-hit resolution the higher the cost) and that the layout of the experiment has to be as compact as possible (say whithin 20 m).
+## Experimental Setup
 
-Define the sizes of the various detectors, such that all the particles traverse them (i.e.  detector acceptance);
-have each event of the synthetich dataset "interacting" with the detectors, i.e. generate a dataset with the hits (properly smeared due to detector resolutions) left by particles crosssing each detector. That should correspond to the actual measurments gathered by the experiment;
-add some random noise to such measurements (e.g. for each detector accordingly to poisson statistic of mean about 1);
-develop an algorithm to track the particles, both the incoming positrons and the outgoing muons.
-keep in consideration the fact that the two muons emerge synchronously from the target: how small the pitch (the distance between individual pixels) have to be of the detectors prior to the magnet? If that is too small, adjust the tracking algorithm accordingly (i.e. the reconstruct muon tracks could share hits in those detectors)
-compute the resolution of the muon momenta and of the ;
+### Components
+
+- **Target**: Reaction site for positrons.
+- **Dipole Magnet**: 1-meter long, 1 Tesla.
+- **Tracking Detectors**: Silicon pixel detectors with resolutions between 50 to 200 micrometers.
+
+### Layout Constraints
+
+- Compact setup within 20 meters.
+- Budget considerations limit the number of detectors and their resolution.
+
+## Simulation Steps
+
+1. Define detector sizes and placements.
+2. Generate a synthetic dataset with smeared hits and noise.
+3. Develop a tracking algorithm for particles.
+4. Calculate muon momentum and angular resolution.
+
+## Implementation Details
+
+### Detector Sizes and Placement
+
+- Detectors before the target and after the magnet should cover the entire beam cross-section.
+- After-target detector should capture all emerging particles.
+
+### Synthetic Dataset
+
+- Simulate events and record hits.
+- Apply smearing based on resolution and add Poisson noise.
+
+### Tracking Algorithm
+
+- Use Kalman filter for tracking.
+- Implement clustering for shared hits.
+
+### Resolution Calculation
+
+- Compute momentum and angular divergence resolutions.
+
+## Example Code
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Define constants
+detector_resolutions = [50e-6, 100e-6, 200e-6]  # in meters
+magnetic_field = 1  # Tesla
+detector_positions = [0, 1, 2, 3, 4, 5]  # in meters
+
+# Function to generate synthetic data
+def generate_event():
+    # Generate random hits
+    hits = [np.random.normal(0, res) for res in detector_resolutions]
+    # Add noise
+    hits = [hit + np.random.poisson(1) for hit in hits]
+    return hits
+
+# Function to track particles
+def track_particles(hits):
+    # Implement Kalman filter tracking
+    pass
+
+# Main simulation loop
+events = []
+for _ in range(1000):
+    event = generate_event()
+    track_particles(event)
+    events.append(event)
+
+# Compute resolutions
+# (Add relevant calculations here)
+
+# Plot results
+plt.hist([event[0] for event in events], bins=50)
+plt.xlabel('Hit Position (m)')
+plt.ylabel('Frequency')
+plt.title('Distribution of Hits at First Detector')
+plt.show()
